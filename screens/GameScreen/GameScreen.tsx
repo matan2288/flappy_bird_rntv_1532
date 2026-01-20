@@ -1,20 +1,12 @@
 import { View } from "react-native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
 import { Bird, Pipes } from "@/components";
 import { useRef, useEffect, useState } from "react";
 import { GameScreenDashbaord } from "./components/GameScreenDashboard";
-
-type Props = NativeStackScreenProps<RootStackParamList, "GameScreen">;
-
-// Type for class component refs
-type BirdRef = InstanceType<typeof Bird>;
-type PipesRef = InstanceType<typeof Pipes>;
+import type { GameScreenProps, BirdRef, PipesRef } from "./GameScreen.types";
 
 
-export default function GameScreen(props: Props) {
-
+export default function GameScreen(props: GameScreenProps) {
     const birdRef = useRef<BirdRef>(null);
     const pipesRef = useRef<PipesRef>(null);
     const gameLoop = useRef<NodeJS.Timeout | null>(null);
