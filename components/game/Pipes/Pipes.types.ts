@@ -1,15 +1,18 @@
-export interface PipePosition {
-    x: number;
-    gapY: number;
+import { Pipes } from "..";
+
+export interface PipesPropsInterface {
+    ref?: InstanceType<typeof Pipes>;
 }
 
-export interface PipesProps {
-    topPipeHeight?: number;
-    bottomPipeHeight?: number;
-    gapSize?: number;
-    speed?: number;
+interface Pipe {
+    y: number;
+    height: number;
 }
 
-export interface PipesState {
-    pipes: PipePosition[];
+export interface PipesStateInterface {
+    pipesWidth: number;
+    pipesXposition: number;
+    topPipe: Pipe;
+    bottomPipe: Pipe;
+    randomYOffset: number;
 }

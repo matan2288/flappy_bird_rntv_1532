@@ -1,4 +1,9 @@
-
+export interface BirdStateInterface {
+    measurements: BirdMeasurements;
+    birdPosition: BirdPosition;
+    birdPhysics: BirdPhysics;
+    isDead: boolean;
+}
 
 export interface BirdMeasurements {
     h: number;
@@ -17,13 +22,7 @@ export interface BirdPhysics {
     jumpDelay: number;
 }
 
-export interface BirdInterface {
-    measurements: BirdMeasurements;
-    birdPosition: BirdPosition;
-    birdPhysics: BirdPhysics;
-    isDead: boolean;
-}
 
-export interface BirdProps {
+export interface BirdPropsInterface {
     // Add props here when needed
 }

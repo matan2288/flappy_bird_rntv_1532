@@ -1,14 +1,14 @@
 import { Component, createRef } from 'react';
 import { Image } from 'react-native';
 import { Dimensions } from 'react-native';
-import { BirdInterface } from './Bird.types';
+import { BirdPropsInterface, BirdStateInterface } from './Bird.types';
 
 
-class Bird extends Component<{}, BirdInterface> {
+class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
     gameLoop: ReturnType<typeof setInterval> | null = null;
     birdRef = createRef<Image>();
 
-    constructor(props: any) {
+    constructor(props: BirdPropsInterface) {
         super(props);
         this.state = {
             measurements: {

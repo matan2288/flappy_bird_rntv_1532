@@ -1,8 +1,9 @@
 import { Component, createRef } from 'react';
 import { Image, Dimensions } from "react-native";
+import { PipesStateInterface } from './Pipes.types';
 
 
-class Pipes extends Component<any, any> {
+class Pipes extends Component<{}, PipesStateInterface> {
     pipesRefs = {
         top: createRef<Image>(),
         bottom: createRef<Image>()
@@ -24,9 +25,7 @@ class Pipes extends Component<any, any> {
             randomYOffset: Math.random() * 300 - 150
         }
 
-
     }
-
 
     movePipes(x: number) {
         this.setState((prevState: any) => ({

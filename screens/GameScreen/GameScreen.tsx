@@ -2,10 +2,9 @@ import { View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
-import { Bird } from "@/components";
+import { Bird, Pipes } from "@/components";
 import { useRef, useEffect, useState } from "react";
 import { GameScreenDashbaord } from "./components/GameScreenDashboard";
-import Pipes from "@/components/game/Pipes/Pipes";
 
 type Props = NativeStackScreenProps<RootStackParamList, "GameScreen">;
 
@@ -44,6 +43,7 @@ export default function GameScreen(props: Props) {
     const restartGameLoop = () => {
         stopGameLoop();
         birdRef.current?.resetBirdGravity();
+        pipesRef.current?.resetPipes();
         startGameLoop();
     }
 
@@ -71,6 +71,7 @@ export default function GameScreen(props: Props) {
                 onJump={() => birdRef.current?.jump()}
             />
             {/* {test.map()} */}
+            <Pipes ref={pipesRef}/>
             <Bird ref={birdRef} />
         </View>
     );
