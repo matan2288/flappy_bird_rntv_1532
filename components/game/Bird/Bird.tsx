@@ -30,7 +30,7 @@ class Bird extends Component<{}, BirdInterface> {
     }
 
 
-    getPosition = () => {
+    getPosition() {
         this.birdRef.current?.measure((x, y, width, height, pageX, pageY) => {
             console.log('Relative to parent:', { x, y, width, height });
             console.log('Absolute on screen:', { pageX, pageY });
@@ -64,7 +64,7 @@ class Bird extends Component<{}, BirdInterface> {
         });
     }
 
-    jump = () => {
+    jump() {
         if (!this.state.isDead) {
             this.setState(prevState => ({
                 birdPhysics: {
