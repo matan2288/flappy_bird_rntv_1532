@@ -4,6 +4,7 @@ import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
 import { Bird } from "@/components";
 import { useRef, useEffect, useState } from "react";
+import { GameScreenDashbaord } from "./components/GameScreenDashboard";
 
 type Props = NativeStackScreenProps<RootStackParamList, "GameScreen">;
 
@@ -18,7 +19,7 @@ export default function GameScreen(props: Props) {
 
     const startGameLoop = () => {
         if (gameLoop.current) return; // Prevent multiple loops
-        
+
         gameLoop.current = setInterval(() => {
             birdRef.current?.applyGravity();
 
@@ -53,54 +54,11 @@ export default function GameScreen(props: Props) {
 
     return (
         <View style={globalStyles.container}>
-            <button
-                style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 10,
-                    zIndex: 1000,
-                    padding: 8,
-                    backgroundColor: '#eee',
-                    border: '1px solid #aaa',
-                    borderRadius: 4,
-                    cursor: 'pointer',
-                }}
-                onClick={() => birdRef.current?.jump()}
-            >
-                Jump
-            </button>
-            <button
-                style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 60,
-                    zIndex: 1000,
-                    padding: 8,
-                    backgroundColor: '#eee',
-                    border: '1px solid #aaa',
-                    borderRadius: 4,
-                    cursor: 'pointer',
-                }}
-                onClick={() => stopGameLoop()}
-            >
-                Stop
-            </button>
-            <button
-                style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 110,
-                    zIndex: 1000,
-                    padding: 8,
-                    backgroundColor: '#eee',
-                    border: '1px solid #aaa',
-                    borderRadius: 4,
-                    cursor: 'pointer',
-                }}
-                onClick={() => restartGameLoop()}
-            >
-                Restart
-            </button>
+            <GameScreenDashbaord
+                onRestart={restartGameLoop}
+                onStop={stopGameLoop}
+                onJump={() => birdRef.current?.jump()}
+            />
             <Bird ref={birdRef} />
         </View>
     );
