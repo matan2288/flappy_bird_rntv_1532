@@ -2,6 +2,7 @@ import { Text, View, Pressable } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
+import Bird from "@/components/game/Bird";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -12,14 +13,15 @@ export default function HomeScreen({ navigation }: Props) {
             <Text style={{ fontSize: 18, color: "#8892b0", marginBottom: 40 }}>Welcome to the navigation demo!</Text>
 
             <View style={globalStyles.buttonContainer}>
+                <Bird/>
                 <Pressable
                     style={({ pressed }) => [
                         globalStyles.button,
                         pressed && globalStyles.buttonPressed,
                     ]}
-                    onPress={() => navigation.navigate("Details", { itemId: 42, title: "Pizza" })}
+                    onPress={() => navigation.navigate("GameScreen", { itemId: 42, title: "Pizza" })}
                 >
-                    <Text style={globalStyles.buttonText}>Go to Details (Pizza)</Text>
+                    <Text style={globalStyles.buttonText}>Go to GameScreen</Text>
                 </Pressable>
 
                 <Pressable
@@ -28,7 +30,7 @@ export default function HomeScreen({ navigation }: Props) {
                         globalStyles.buttonSecondary,
                         pressed && globalStyles.buttonPressed,
                     ]}
-                    onPress={() => navigation.navigate("Details", { itemId: 99, title: "Burger" })}
+                    onPress={() => navigation.navigate("GameScreen", { itemId: 99, title: "Burger" })}
                 >
                     <Text style={globalStyles.buttonText}>Go to Details (Burger)</Text>
                 </Pressable>

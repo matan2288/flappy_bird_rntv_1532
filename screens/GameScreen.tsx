@@ -3,7 +3,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Details">;
+type Props = NativeStackScreenProps<RootStackParamList, "GameScreen">;
 
 export default function GameScreen({ route, navigation }: Props) {
     const { itemId, title } = route.params;

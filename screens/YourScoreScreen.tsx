@@ -3,14 +3,12 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Details">;
+type Props = NativeStackScreenProps<RootStackParamList, "YourScore">;
 
-export default function YourScoreScreen({ route, navigation }: Props) {
-    const { itemId, title } = route.params;
-
+export default function YourScoreScreen({ navigation }: Props) {
     return (
         <View style={globalStyles.container}>
-            <Text>🏠 Test213</Text>
+            <Text>🎯 Your Score</Text>
         </View>
     );
 }

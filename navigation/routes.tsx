@@ -1,10 +1,18 @@
-import HomeScreen from "@/screens/HomeScreen";
-import DetailsScreen from "@/screens/GameScreen";
+import {
+  HomeScreen,
+  GameScreen,
+  ScoreboardScreen,
+  UserInfoScreen,
+  YourScoreScreen,
+} from "@/screens";
 
 // Route param types
 export type RootStackParamList = {
     Home: undefined;
-    Details: { itemId: number; title: string };
+    GameScreen: { itemId: number; title: string };
+    Scoreboard: undefined;
+    UserInfo: undefined;
+    YourScore: undefined;
 };
 
 // Route configuration
@@ -15,11 +23,26 @@ export const routes = [
         options: { title: "Navigation Demo" },
     },
     {
-        name: "Details" as const,
-        component: DetailsScreen,
+        name: "GameScreen" as const,
+        component: GameScreen,
         options: ({ route }: { route: { params: { title: string } } }) => ({
             title: route.params.title,
         }),
+    },
+    {
+        name: "Scoreboard" as const,
+        component: ScoreboardScreen,
+        options: { title: "Scoreboard" },
+    },
+    {
+        name: "UserInfo" as const,
+        component: UserInfoScreen,
+        options: { title: "User Info" },
+    },
+    {
+        name: "YourScore" as const,
+        component: YourScoreScreen,
+        options: { title: "Your Score" },
     },
 ] as const;
 
