@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import { routes, RootStackParamList } from "./routes";
+import { headerStyles } from "@/theme/headerStyles";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -10,19 +10,7 @@ export default function RootNavigator() {
         <NavigationContainer>
             <Stack.Navigator
                 initialRouteName="Home"
-                screenOptions={{
-                    headerStyle: {
-                        backgroundColor: "#0f0f23",
-                    },
-                    headerTintColor: "#00d4ff",
-                    headerTitleStyle: {
-                        fontWeight: "bold",
-                    },
-                    contentStyle: {
-                        backgroundColor: "#0f0f23",
-                    },
-                    animation: "slide_from_right",
-                }}
+                screenOptions={headerStyles}
             >
                 {routes.map(({ name, component, options }) => (
                     <Stack.Screen
