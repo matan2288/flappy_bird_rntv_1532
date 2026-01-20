@@ -21,7 +21,6 @@ interface BirdState {
 }
 
 class Bird extends Component<{}, BirdState> {
-    gameLoop: ReturnType<typeof setInterval> | null = null;
     imageRef = createRef<Image>();
 
     constructor(props: any) {

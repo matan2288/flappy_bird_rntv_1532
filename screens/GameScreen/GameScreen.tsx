@@ -53,13 +53,14 @@ export default function GameScreen(props: Props) {
     }, []);
 
     return (
-        <View style={globalStyles.container}>
-            <GameScreenDashbaord
-                onRestart={restartGameLoop}
-                onStop={stopGameLoop}
-                onJump={() => birdRef.current?.jump()}
-            />
-            <Bird ref={birdRef} />
-        </View>
+            <View style={globalStyles.container}>
+                <GameScreenDashbaord
+                    onRestart={restartGameLoop}
+                    onStop={stopGameLoop}
+                    onJump={() => birdRef.current?.jump()}
+                />
+
+                <Bird ref={birdRef} />
+            </View>
     );
 }
