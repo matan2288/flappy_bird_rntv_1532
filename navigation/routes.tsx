@@ -1,5 +1,5 @@
-import HomeScreen from "../screens/HomeScreen";
-import DetailsScreen from "../screens/GameScreen";
+import HomeScreen from "@/screens/HomeScreen";
+import DetailsScreen from "@/screens/GameScreen";
 
 // Route param types
 export type RootStackParamList = {
