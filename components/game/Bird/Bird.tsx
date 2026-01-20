@@ -12,8 +12,8 @@ class Bird extends Component<{}, BirdInterface> {
         super(props);
         this.state = {
             measurements: {
-                h: 30,
-                w: 35,
+                h: 35,
+                w: 40,
             },
             birdPosition: {
                 x: 100,

@@ -9,20 +9,30 @@ import Pipes from "@/components/game/Pipes/Pipes";
 
 type Props = NativeStackScreenProps<RootStackParamList, "GameScreen">;
 
-// Type for the Bird component ref (class component instance)
+// Type for class component refs
 type BirdRef = InstanceType<typeof Bird>;
+type PipesRef = InstanceType<typeof Pipes>;
 
 
 export default function GameScreen(props: Props) {
 
     const birdRef = useRef<BirdRef>(null);
+    const pipesRef = useRef<PipesRef>(null);
     const gameLoop = useRef<NodeJS.Timeout | null>(null);
+
+    const [pipeSpawn, setPipeSpawn] = useState([]);
+
+
+    // const test = [] as any;
 
     const startGameLoop = () => {
         if (gameLoop.current) return; // Prevent multiple loops
 
         gameLoop.current = setInterval(() => {
             birdRef.current?.applyGravity();
+            pipesRef.current?.movePipes(1);
+
+            // test.push(<Pipes ref={pipesRef} />);
 
             if (birdRef.current?.isBirdDead() && gameLoop.current) {
                 stopGameLoop();
@@ -60,7 +70,7 @@ export default function GameScreen(props: Props) {
                 onStop={stopGameLoop}
                 onJump={() => birdRef.current?.jump()}
             />
-            <Pipes/>
+            {/* {test.map()} */}
             <Bird ref={birdRef} />
         </View>
     );
