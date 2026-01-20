@@ -1,26 +1,10 @@
 import React, { Component, createRef } from 'react';
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
 import { Dimensions } from 'react-native';
+import { BirdInterface } from './Bird.types';
 
-interface BirdState {
-    measurements: {
-        h: number;
-        w: number;
-    };
-    birdPosition: {
-        x: number;
-        y: number;
-    };
-    birdPhysics: {
-        jumpSpeed: number;
-        birdDropSpeed: number;
-        gravity: number;
-        jumpDelay: number;
-    };
-    isDead: boolean;
-}
 
-class Bird extends Component<{}, BirdState> {
+class Bird extends Component<{}, BirdInterface> {
     gameLoop: ReturnType<typeof setInterval> | null = null;
     imageRef = createRef<Image>();
 
