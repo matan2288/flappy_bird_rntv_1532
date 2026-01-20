@@ -10,7 +10,7 @@ export default function RootNavigator() {
         <NavigationContainer>
             <Stack.Navigator
                 initialRouteName="Home"
-                screenOptions={headerStyles}
+                screenOptions={{ headerShown: false }}
             >
                 {routes.map(({ name, component, options }) => (
                     <Stack.Screen
