@@ -1,12 +1,12 @@
-import React, { Component, createRef } from 'react';
-import { View, Text, Button, StyleSheet, Image } from 'react-native';
+import { Component, createRef } from 'react';
+import { Image } from 'react-native';
 import { Dimensions } from 'react-native';
 import { BirdInterface } from './Bird.types';
 
 
 class Bird extends Component<{}, BirdInterface> {
     gameLoop: ReturnType<typeof setInterval> | null = null;
-    imageRef = createRef<Image>();
+    birdRef = createRef<Image>();
 
     constructor(props: any) {
         super(props);
@@ -31,7 +31,7 @@ class Bird extends Component<{}, BirdInterface> {
 
 
     getPosition = () => {
-        this.imageRef.current?.measure((x, y, width, height, pageX, pageY) => {
+        this.birdRef.current?.measure((x, y, width, height, pageX, pageY) => {
             console.log('Relative to parent:', { x, y, width, height });
             console.log('Absolute on screen:', { pageX, pageY });
             // Get correct screen height from Dimensions API
@@ -107,7 +107,7 @@ class Bird extends Component<{}, BirdInterface> {
     render() {
         return (
             <Image
-                ref={this.imageRef}
+                ref={this.birdRef}
                 source={require('@/assets/flappybird.png')}
                 style={{
                     position: 'absolute',

@@ -5,6 +5,7 @@ import { globalStyles } from "@/theme/globalStyles";
 import { Bird } from "@/components";
 import { useRef, useEffect, useState } from "react";
 import { GameScreenDashbaord } from "./components/GameScreenDashboard";
+import Pipes from "@/components/game/Pipes/Pipes";
 
 type Props = NativeStackScreenProps<RootStackParamList, "GameScreen">;
 
@@ -59,6 +60,7 @@ export default function GameScreen(props: Props) {
                 onStop={stopGameLoop}
                 onJump={() => birdRef.current?.jump()}
             />
+            <Pipes/>
             <Bird ref={birdRef} />
         </View>
     );
