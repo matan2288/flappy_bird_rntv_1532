@@ -1,27 +1,29 @@
 import { View } from "react-native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
-import { Bird } from "@/components";
+import { Bird, Pipes } from "@/components";
 import { useRef, useEffect, useState } from "react";
 import { GameScreenDashbaord } from "./components/GameScreenDashboard";
-
-type Props = NativeStackScreenProps<RootStackParamList, "GameScreen">;
-
-// Type for the Bird component ref (class component instance)
-type BirdRef = InstanceType<typeof Bird>;
+import type { GameScreenProps, BirdRef, PipesRef } from "./GameScreen.types";
 
 
-export default function GameScreen(props: Props) {
-
+export default function GameScreen(props: GameScreenProps) {
     const birdRef = useRef<BirdRef>(null);
+    const pipesRef = useRef<PipesRef>(null);
     const gameLoop = useRef<NodeJS.Timeout | null>(null);
+
+    const [pipeSpawn, setPipeSpawn] = useState([]);
+
+
+    // const test = [] as any;
 
     const startGameLoop = () => {
         if (gameLoop.current) return; // Prevent multiple loops
 
         gameLoop.current = setInterval(() => {
             birdRef.current?.applyGravity();
+            pipesRef.current?.movePipes(1);
+
+            // test.push(<Pipes ref={pipesRef} />);
 
             if (birdRef.current?.isBirdDead() && gameLoop.current) {
                 stopGameLoop();
@@ -33,6 +35,7 @@ export default function GameScreen(props: Props) {
     const restartGameLoop = () => {
         stopGameLoop();
         birdRef.current?.resetBirdGravity();
+        pipesRef.current?.resetPipes();
         startGameLoop();
     }
 
@@ -53,14 +56,15 @@ export default function GameScreen(props: Props) {
     }, []);
 
     return (
-            <View style={globalStyles.container}>
-                <GameScreenDashbaord
-                    onRestart={restartGameLoop}
-                    onStop={stopGameLoop}
-                    onJump={() => birdRef.current?.jump()}
-                />
-
-                <Bird ref={birdRef} />
-            </View>
+        <View style={globalStyles.container}>
+            <GameScreenDashbaord
+                onRestart={restartGameLoop}
+                onStop={stopGameLoop}
+                onJump={() => birdRef.current?.jump()}
+            />
+            {/* {test.map()} */}
+            <Pipes ref={pipesRef}/>
+            <Bird ref={birdRef} />
+        </View>
     );
 }

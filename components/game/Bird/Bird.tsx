@@ -1,34 +1,19 @@
-import React, { Component, createRef } from 'react';
-import { View, Text, Button, StyleSheet, Image } from 'react-native';
+import { Component, createRef } from 'react';
+import { Image } from 'react-native';
 import { Dimensions } from 'react-native';
+import { BirdPropsInterface, BirdStateInterface } from './Bird.types';
 
-interface BirdState {
-    measurements: {
-        h: number;
-        w: number;
-    };
-    birdPosition: {
-        x: number;
-        y: number;
-    };
-    birdPhysics: {
-        jumpSpeed: number;
-        birdDropSpeed: number;
-        gravity: number;
-        jumpDelay: number;
-    };
-    isDead: boolean;
-}
 
-class Bird extends Component<{}, BirdState> {
-    imageRef = createRef<Image>();
+class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
+    gameLoop: ReturnType<typeof setInterval> | null = null;
+    birdRef = createRef<Image>();
 
-    constructor(props: any) {
+    constructor(props: BirdPropsInterface) {
         super(props);
         this.state = {
             measurements: {
-                h: 30,
-                w: 35,
+                h: 35,
+                w: 40,
             },
             birdPosition: {
                 x: 100,
@@ -45,8 +30,8 @@ class Bird extends Component<{}, BirdState> {
     }
 
 
-    getPosition = () => {
-        this.imageRef.current?.measure((x, y, width, height, pageX, pageY) => {
+    getPosition() {
+        this.birdRef.current?.measure((x, y, width, height, pageX, pageY) => {
             console.log('Relative to parent:', { x, y, width, height });
             console.log('Absolute on screen:', { pageX, pageY });
             // Get correct screen height from Dimensions API
@@ -79,7 +64,7 @@ class Bird extends Component<{}, BirdState> {
         });
     }
 
-    jump = () => {
+    jump() {
         if (!this.state.isDead) {
             this.setState(prevState => ({
                 birdPhysics: {
@@ -122,7 +107,7 @@ class Bird extends Component<{}, BirdState> {
     render() {
         return (
             <Image
-                ref={this.imageRef}
+                ref={this.birdRef}
                 source={require('@/assets/flappybird.png')}
                 style={{
                     position: 'absolute',

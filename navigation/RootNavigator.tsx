@@ -1,7 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { routes, RootStackParamList } from "./routes";
-import { headerStyles } from "@/theme/headerStyles";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
