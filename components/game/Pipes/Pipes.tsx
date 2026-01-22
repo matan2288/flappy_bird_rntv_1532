@@ -13,7 +13,7 @@ class Pipes extends Component<{}, PipesStateInterface> {
         super(props);
         this.state = {
             pipesWidth: 40,
-            pipesXposition: 330,
+            pipesXposition: Dimensions.get('window').width,
             topPipe: {
                 y: 0,
                 height: 300
