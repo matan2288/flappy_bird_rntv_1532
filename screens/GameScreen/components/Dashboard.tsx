@@ -1,15 +1,14 @@
 import { View } from "react-native";
 import { useEffect } from "react";
-import { globalStyles } from "@/theme/globalStyles";
 import { gameScreenStyle } from "../GameScreen.style";
-import { GameScreenDashboardProps } from "../GameScreen.types";
+import { DashboardProps } from "../GameScreen.types";
 
-export const GameScreenDashbaord = (props: GameScreenDashboardProps) => {
+export const Dashboard = (props: DashboardProps) => {
     useEffect(() => {
 
     }, []);
     return (
-        <View style={globalStyles.container}>
+        <View style={gameScreenStyle.dashboardContainer}>
             <button
                 style={{
                     ...gameScreenStyle.dashboardButtons,
