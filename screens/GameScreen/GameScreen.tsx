@@ -10,8 +10,13 @@ export default function GameScreen(props: GameScreenProps) {
     const birdRef = useRef<BirdRef>(null);
     const pipesRef = useRef<PipesRef>(null);
     const gameLoop = useRef<NodeJS.Timeout | null>(null);
-    const pipesListRef = useRef<React.RefObject<PipesRef | null>[]>([]);
-    const [pipesList, setPipesList] = useState<React.RefObject<PipesRef | null>[]>([]);
+    // Add a counter ref
+    const pipeIdCounter = useRef(0);
+
+    // Change the data structure to include an id
+    const pipesListRef = useRef<{ id: number; ref: React.RefObject<PipesRef | null> }[]>([]);
+    const [pipesList, setPipesList] = useState<{ id: number; ref: React.RefObject<PipesRef | null> }[]>([]);
+
     const pipeSpwanTimerLimit = 120;
     let pipeSpwan = 0;
 
@@ -20,23 +25,33 @@ export default function GameScreen(props: GameScreenProps) {
 
         gameLoop.current = setInterval(() => {
             birdRef.current?.applyGravity();
-            pipesListRef.current.forEach(ref => {
-                ref.current?.movePipes(3);
+
+            // Pipe movement logic
+            pipesListRef.current.forEach(pipe => {
+                pipe.ref.current?.movePipes(3);
             });
 
             pipeSpwan++;
-   
 
+            // Pipes removal logic
+            if (pipesListRef.current.length > 0) {
+                const firstPipeX = pipesListRef.current[0].ref.current?.state.pipesXposition;
+                if (firstPipeX !== undefined && firstPipeX < -80) {
+                    pipesListRef.current = pipesListRef.current.slice(1);
+                    setPipesList([...pipesListRef.current]);
+                }
+            }
 
+            //Pipes spwan logic
             if (pipeSpwan === pipeSpwanTimerLimit) {
                 const newPipesRef = createRef<PipesRef>();
-
-                pipesListRef.current = [...pipesListRef.current, newPipesRef];
+                const newPipe = { id: pipeIdCounter.current++, ref: newPipesRef };
+                pipesListRef.current = [...pipesListRef.current, newPipe];
                 setPipesList([...pipesListRef.current]);
-
-                console.log("new pipes has been added");
                 pipeSpwan = 0;
             }
+
+
 
             if (birdRef.current?.isBirdDead() && gameLoop.current) {
                 stopGameLoop();
@@ -69,8 +84,8 @@ export default function GameScreen(props: GameScreenProps) {
 
     return (
         <View style={globalStyles.container}>
-            {pipesList.map((ref, index) => (
-                <Pipes key={index} ref={ref} />
+            {pipesList.map((pipe) => (
+                <Pipes key={pipe.id} ref={pipe.ref} />
             ))}
             <Dashboard
                 onRestart={restartGameLoop}
