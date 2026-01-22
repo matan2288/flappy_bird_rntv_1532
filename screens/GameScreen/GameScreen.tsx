@@ -3,6 +3,7 @@ import { globalStyles } from "@/theme/globalStyles";
 import { Bird, Pipes } from "@/components";
 import { useRef, useEffect, useState, createRef } from "react";
 import { Dashboard } from "./components/Dashboard";
+import { v4 as uuidv4 } from "uuid";
 import type { GameScreenProps, BirdRef, PipesRef } from "./GameScreen.types";
 
 
@@ -10,18 +11,15 @@ export default function GameScreen(props: GameScreenProps) {
     const birdRef = useRef<BirdRef>(null);
     const pipesRef = useRef<PipesRef>(null);
     const gameLoop = useRef<NodeJS.Timeout | null>(null);
-    // Add a counter ref
-    const pipeIdCounter = useRef(0);
 
-    // Change the data structure to include an id
-    const pipesListRef = useRef<{ id: number; ref: React.RefObject<PipesRef | null> }[]>([]);
-    const [pipesList, setPipesList] = useState<{ id: number; ref: React.RefObject<PipesRef | null> }[]>([]);
+    const pipesListRef = useRef<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]);
+    const [pipesList, setPipesList] = useState<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]);
 
     const pipeSpwanTimerLimit = 120;
     let pipeSpwan = 0;
 
     const startGameLoop = () => {
-        if (gameLoop.current) return; // Prevent multiple loops
+        if (gameLoop.current) return;
 
         gameLoop.current = setInterval(() => {
             birdRef.current?.applyGravity();
@@ -45,13 +43,11 @@ export default function GameScreen(props: GameScreenProps) {
             //Pipes spwan logic
             if (pipeSpwan === pipeSpwanTimerLimit) {
                 const newPipesRef = createRef<PipesRef>();
-                const newPipe = { id: pipeIdCounter.current++, ref: newPipesRef };
+                const newPipe = { id: uuidv4(), ref: newPipesRef };
                 pipesListRef.current = [...pipesListRef.current, newPipe];
                 setPipesList([...pipesListRef.current]);
                 pipeSpwan = 0;
             }
-
-
 
             if (birdRef.current?.isBirdDead() && gameLoop.current) {
                 stopGameLoop();
@@ -92,7 +88,6 @@ export default function GameScreen(props: GameScreenProps) {
                 onStop={stopGameLoop}
                 onJump={() => birdRef.current?.jump()}
             />
-
             <Bird ref={birdRef} />
         </View>
     );
