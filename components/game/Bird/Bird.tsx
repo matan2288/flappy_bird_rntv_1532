@@ -29,23 +29,6 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
         };
     }
 
-
-    getPosition() {
-        this.birdRef.current?.measure((x, y, width, height, pageX, pageY) => {
-            console.log('Relative to parent:', { x, y, width, height });
-            console.log('Absolute on screen:', { pageX, pageY });
-            // Get correct screen height from Dimensions API
-
-            const { height: screenHeight } = Dimensions.get('window');
-            console.log('Screen height:', screenHeight);
-
-            this.setState({
-                measurements: { w: width, h: height },
-                birdPosition: { x: pageX, y: pageY },
-            });
-        });
-    };
-
     applyGravity() {
         this.setState(prevState => {
             const newDropSpeed = prevState.birdPhysics.birdDropSpeed + prevState.birdPhysics.gravity;
@@ -116,7 +99,6 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
                     left: this.state.birdPosition.x,  // Control horizontal position
                     top: this.state.birdPosition.y,   // Control vertical position
                 }}
-                onLayout={this.getPosition}
             />
         );
     }
