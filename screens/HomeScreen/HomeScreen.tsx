@@ -2,7 +2,6 @@ import { Text, View, Pressable } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
-import Bird from "@/components/game/Bird";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 

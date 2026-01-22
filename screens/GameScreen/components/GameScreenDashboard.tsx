@@ -1,17 +1,10 @@
 import { View } from "react-native";
 import { useEffect } from "react";
 import { globalStyles } from "@/theme/globalStyles";
+import { gameScreenStyle } from "../GameScreen.style";
+import { GameScreenDashboardProps } from "../GameScreen.types";
 
-
-type Props = {
-    onRestart: () => void;
-    onStop: () => void;
-    onJump: () => void;
-};
-
-
-
-export  const  GameScreenDashbaord = (props: Props) => {
+export const GameScreenDashbaord = (props: GameScreenDashboardProps) => {
     useEffect(() => {
 
     }, []);
@@ -19,15 +12,8 @@ export  const  GameScreenDashbaord = (props: Props) => {
         <View style={globalStyles.container}>
             <button
                 style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 10,
-                    zIndex: 1000,
-                    padding: 8,
-                    backgroundColor: '#eee',
-                    border: '1px solid #aaa',
-                    borderRadius: 4,
-                    cursor: 'pointer',
+                    ...gameScreenStyle.dashboardButtons,
+                    left: 10
                 }}
                 onClick={() => props.onJump()}
             >
@@ -35,15 +21,8 @@ export  const  GameScreenDashbaord = (props: Props) => {
             </button>
             <button
                 style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 60,
-                    zIndex: 1000,
-                    padding: 8,
-                    backgroundColor: '#eee',
-                    border: '1px solid #aaa',
-                    borderRadius: 4,
-                    cursor: 'pointer',
+                    ...gameScreenStyle.dashboardButtons,
+                    left: 60
                 }}
                 onClick={() => props.onStop()}
             >
@@ -51,15 +30,8 @@ export  const  GameScreenDashbaord = (props: Props) => {
             </button>
             <button
                 style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 110,
-                    zIndex: 1000,
-                    padding: 8,
-                    backgroundColor: '#eee',
-                    border: '1px solid #aaa',
-                    borderRadius: 4,
-                    cursor: 'pointer',
+                    ...gameScreenStyle.dashboardButtons,
+                    left: 110
                 }}
                 onClick={() => props.onRestart()}
             >

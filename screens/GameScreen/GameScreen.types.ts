@@ -13,3 +13,8 @@ export interface GameState {
     isPaused: boolean;
     score: number;
 }
+export interface GameScreenDashboardProps {
+    onRestart: () => void;
+    onStop: () => void;
+    onJump: () => void;
+}
