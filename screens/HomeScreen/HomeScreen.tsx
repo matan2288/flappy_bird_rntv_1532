@@ -1,11 +1,8 @@
 import { Text, View, Pressable } from "react-native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
+import { HomeScreenProps } from "./HomeScreen.types";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Home">;
-
-export default function HomeScreen({ navigation }: Props) {
+export default function HomeScreen({ navigation }: HomeScreenProps) {
     return (
         <View style={globalStyles.container}>
             <Text style={globalStyles.title}>🏠 Home Screen</Text>
