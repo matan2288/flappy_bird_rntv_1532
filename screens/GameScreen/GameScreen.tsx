@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { globalStyles } from "@/theme/globalStyles";
 import { Bird, Pipes } from "@/components";
 import { useRef, useEffect, useState, createRef } from "react";
@@ -14,6 +14,8 @@ export default function GameScreen(props: GameScreenProps) {
 
     const pipesListRef = useRef<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]);
     const [pipesList, setPipesList] = useState<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]);
+    const [difficulty, setDifficulty] = useState<number>(3);
+    const [score, setScore] = useState<number>(0);
 
     const pipeSpwanTimerLimit = 120;
     let pipeSpwan = 0;
@@ -31,6 +33,7 @@ export default function GameScreen(props: GameScreenProps) {
 
             pipeSpwan++;
 
+            setScore(score + 7);
             // Pipes removal logic
             if (pipesListRef.current.length > 0) {
                 const firstPipeX = pipesListRef.current[0].ref.current?.state.pipesXposition;
@@ -47,6 +50,10 @@ export default function GameScreen(props: GameScreenProps) {
                 pipesListRef.current = [...pipesListRef.current, newPipe];
                 setPipesList([...pipesListRef.current]);
                 pipeSpwan = 0;
+            }
+
+            if (score === 50) {
+                setDifficulty(4);
             }
 
             if (birdRef.current?.isBirdDead() && gameLoop.current) {
@@ -79,7 +86,7 @@ export default function GameScreen(props: GameScreenProps) {
     }, []);
 
     return (
-        <View style={globalStyles.container}>
+        <View style={[globalStyles.container, { overflow: 'hidden' }]}>
             {pipesList.map((pipe) => (
                 <Pipes key={pipe.id} ref={pipe.ref} />
             ))}
@@ -88,7 +95,10 @@ export default function GameScreen(props: GameScreenProps) {
                 onStop={stopGameLoop}
                 onJump={() => birdRef.current?.jump()}
             />
-            <Bird ref={birdRef} />
+            <Text style={{ marginBottom: 4, fontWeight: 'bold', color: 'white' }}>Difficulty: {difficulty} score: {score}</Text>
+
+            <Bird ref={birdRef} /> 
         </View>
     );
 }
+
