@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import { globalStyles } from "@/theme/globalStyles";
 import { Bird, Pipes } from "@/components";
 import { useRef, useEffect, useState, createRef } from "react";
-import { Dashboard } from "./components/Dashboard";
+import { ActionBar } from "./components/ActionBar";
 import { v4 as uuidv4 } from "uuid";
 import type { GameScreenProps, BirdRef, PipesRef } from "./GameScreen.types";
 
@@ -90,7 +90,7 @@ export default function GameScreen(props: GameScreenProps) {
             {pipesList.map((pipe) => (
                 <Pipes key={pipe.id} ref={pipe.ref} />
             ))}
-            <Dashboard
+            <ActionBar
                 onRestart={restartGameLoop}
                 onStop={stopGameLoop}
                 onJump={() => birdRef.current?.jump()}
