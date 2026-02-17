@@ -9,40 +9,30 @@ class Pipes extends Component<{}, PipesStateInterface> {
         bottom: createRef<Image>()
     };
 
-    constructor(props: any) {
+    constructor(props: {}) {
         super(props);
+        const { width, height } = Dimensions.get('window');
         this.state = {
-            pipesWidth: 40,
-            pipesXposition: Dimensions.get('window').width,
-            topPipe: {
-                y: 0,
-                height: 300
-            },
-            bottomPipe: {
-                y: Dimensions.get('window').height,
-                height: 300
-            },
-            randomYOffset: Math.random() * 300 - 150
-        }
-
+            pipesXposition: width,
+            randomYOffset: (Math.random() * 0.2 - 0.1) * height
+        };
     }
 
     movePipes(x: number) {
-        this.setState((prevState: any) => ({
-            ...prevState,
+        this.setState(prevState => ({
             pipesXposition: prevState.pipesXposition - x
         }));
     }
 
-
     resetPipes() {
-        this.setState((prevState: any) => ({
-            ...prevState,
-            pipesXposition: 330
-        }));
+        const { width } = Dimensions.get('window');
+        this.setState({
+            pipesXposition: 0
+        });
     }
 
     render() {
+        const { height } = Dimensions.get('window');
         return (
             <>
                 <Image
@@ -50,10 +40,10 @@ class Pipes extends Component<{}, PipesStateInterface> {
                     source={require("@/assets/toppipe.png")}
                     style={{
                         position: 'absolute',
-                        height: 280 + this.state.randomYOffset,
+                        height: (height * 0.37) + this.state.randomYOffset,
                         width: 80,
-                        left: this.state.pipesXposition,  // Control horizontal position
-                        top: 0,   // Control vertical position
+                        left: this.state.pipesXposition,
+                        top: 0,
                     }}
                 />
                 <Image
@@ -61,17 +51,15 @@ class Pipes extends Component<{}, PipesStateInterface> {
                     source={require("@/assets/bottompipe.png")}
                     style={{
                         position: 'absolute',
-                        height: 280 + this.state.randomYOffset,
+                        height: (height * 0.37) - this.state.randomYOffset,
                         width: 80,
-                        left: this.state.pipesXposition,  // Control horizontal position
-                        bottom: 0,   // Control vertical position
+                        left: this.state.pipesXposition,
+                        bottom: 0,
                     }}
                 />
             </>
         );
     }
-
-
 }
 
 export default Pipes;
