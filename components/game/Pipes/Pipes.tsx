@@ -1,7 +1,7 @@
 import { Component, createRef } from 'react';
 import { Image, Dimensions } from "react-native";
 import { PipesStateInterface } from './Pipes.types';
-import { PIPE_HEIGHT_RATIO, RANDOM_OFFSET_MAX, RANDOM_OFFSET_MIN, PIPE_WIDTH, TOP_PIPE_DRAW_START, BOTTOM_PIPE_DRAW_START, PIPE_RESET_X_POSITION } from './pipesConsts';
+import { PIPE_HEIGHT_RATIO, RANDOM_OFFSET_MAX, RANDOM_OFFSET_MIN, PIPE_WIDTH, TOP_PIPE_DRAW_START, BOTTOM_PIPE_DRAW_START, PIPE_RESET_X_POSITION } from './consts';
 
 
 class Pipes extends Component<{}, PipesStateInterface> {

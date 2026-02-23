@@ -10,9 +10,9 @@ import {
     BIRD_GRAVITY, 
     BIRD_INITIAL_DROP_SPEED, 
     BIRD_JUMP_DELAY 
-} from './birdConsts';
-import { PIPE_WIDTH } from '../Pipes/pipesConsts';
-import { SCREEN_TOP_BORDER } from '@/screens/GameScreen/gameScreenConsts';
+} from './consts';
+import { PIPE_WIDTH } from '../Pipes/consts';
+import { SCREEN_TOP_BORDER } from '@/screens/GameScreen/consts';
 
 class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
     gameLoop: ReturnType<typeof setInterval> | null = null;

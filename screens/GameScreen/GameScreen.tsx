@@ -6,9 +6,9 @@ import { ActionBar } from "./components/ActionBar";
 import { v4 as uuidv4 } from "uuid";
 import type { GameScreenProps, BirdRef, PipesRef } from "./GameScreen.types";
 import { isEmpty, isNumber } from "lodash";
-import { PIPE_SPAWN_TIMER_LIMIT, PIPE_SPAWN_INITIAL, PIPE_X_MOVEMENT_SPEED, PIPE_OFFSCREEN_REMOVAL } from "./gameScreenConsts";
-import { BIRD_WIDTH, BIRD_INITIAL_X } from "@/components/game/Bird/birdConsts";
-import { PIPE_WIDTH } from "@/components/game/Pipes/pipesConsts";
+import { PIPE_SPAWN_TIMER_LIMIT, PIPE_SPAWN_INITIAL, PIPE_X_MOVEMENT_SPEED, PIPE_OFFSCREEN_REMOVAL } from "./consts";
+import { BIRD_WIDTH, BIRD_INITIAL_X } from "@/components/game/Bird/consts";
+import { PIPE_WIDTH } from "@/components/game/Pipes/consts";
 
 
 export default function GameScreen(props: GameScreenProps) {
@@ -16,7 +16,7 @@ export default function GameScreen(props: GameScreenProps) {
     const pipesRef = useRef<PipesRef>(null);
     const gameLoop = useRef<NodeJS.Timeout | null>(null);
 
-    const [pipesList, setPipesList] = useState<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]);
+    const [pipesList, setPipesList] = useState<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]); // For re rendering the component for new pipes
     const [difficulty, setDifficulty] = useState<number>(3);
     const [score, setScore] = useState<number>(0);
 
@@ -61,8 +61,7 @@ export default function GameScreen(props: GameScreenProps) {
 
             //Pipes spwan logic
             if (pipeSpwan === PIPE_SPAWN_TIMER_LIMIT) {
-                const newPipesRef = createRef<PipesRef>();
-                const newPipe = { id: uuidv4(), ref: newPipesRef };
+                const newPipe = { id: uuidv4(), ref: createRef<PipesRef>() };
                 pipesListRef.current = [...pipesListRef.current, newPipe];
                 setPipesList([...pipesListRef.current]);
                 pipeSpwan = PIPE_SPAWN_INITIAL;
