@@ -1,7 +1,17 @@
 import { Component, createRef } from 'react';
-import { Image } from 'react-native';
-import { Dimensions } from 'react-native';
+import { Image, Dimensions } from 'react-native';
 import { BirdPropsInterface, BirdStateInterface } from './Bird.types';
+import { 
+    BIRD_HEIGHT, 
+    BIRD_WIDTH, 
+    BIRD_INITIAL_X, 
+    BIRD_INITIAL_Y, 
+    BIRD_JUMP_SPEED, 
+    BIRD_GRAVITY, 
+    BIRD_INITIAL_DROP_SPEED, 
+    BIRD_JUMP_DELAY 
+} from './birdConsts';
+import { PIPE_WIDTH } from '../Pipes/pipesConsts';
 class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
     gameLoop: ReturnType<typeof setInterval> | null = null;
     birdRef = createRef<Image>();
@@ -10,18 +20,18 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
         super(props);
         this.state = {
             measurements: {
-                h: 35,
-                w: 40,
+                h: BIRD_HEIGHT,
+                w: BIRD_WIDTH,
             },
             birdPosition: {
-                x: 100,
-                y: 100
+                x: BIRD_INITIAL_X,
+                y: BIRD_INITIAL_Y
             },
             birdPhysics: {
-                jumpSpeed: -7.5,
-                birdDropSpeed: 0,
-                gravity: 0.2,
-                jumpDelay: 0,
+                jumpSpeed: BIRD_JUMP_SPEED,
+                birdDropSpeed: BIRD_INITIAL_DROP_SPEED,
+                gravity: BIRD_GRAVITY,
+                jumpDelay: BIRD_JUMP_DELAY,
             },
             isDead: false
         };
@@ -59,12 +69,12 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
     resetBirdGravity() {
         this.setState({
             birdPosition: {
-                x: 100,
-                y: 100
+                x: BIRD_INITIAL_X,
+                y: BIRD_INITIAL_Y
             },
             birdPhysics: {
                 ...this.state.birdPhysics,
-                birdDropSpeed: 0,
+                birdDropSpeed: BIRD_INITIAL_DROP_SPEED,
             },
             isDead: false
         });
@@ -72,15 +82,11 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
 
     isBirdDead(pipes: any) {
         const { height: screenHeight } = Dimensions.get('window');
-        const birdX = this.state.birdPosition.x;
-        const pipeX = pipes?.pipesXposition;
-        const pipeWidth = 80;
-
-        const horizontallyAligned = birdX + 40 > pipeX && birdX < pipeX + pipeWidth;
+        const horizontallyAligned = this.state.birdPosition.x + BIRD_WIDTH > pipes?.pipesXposition && this.state.birdPosition.x < pipes?.pipesXposition + PIPE_WIDTH;
 
         if (horizontallyAligned) {
             let topCollision = this.state.birdPosition.y < pipes?.topPipeEdge;
-            let bottomCollision = this.state.birdPosition.y + 35 > screenHeight - pipes?.bottomPipeEdge;
+            let bottomCollision = this.state.birdPosition.y + BIRD_HEIGHT > screenHeight - pipes?.bottomPipeEdge;
 
             if (topCollision || bottomCollision) {
                 this.setState({
