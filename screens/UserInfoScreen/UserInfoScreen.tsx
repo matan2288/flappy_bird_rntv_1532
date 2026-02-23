@@ -1,4 +1,5 @@
 import { Text, TextInput, View, Pressable } from "react-native";
+import { useEffect } from "react";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
@@ -7,7 +8,12 @@ import { useUserStore } from '@/store';
 type Props = NativeStackScreenProps<RootStackParamList, "UserInfo">;
 
 export default function UserInfoScreen({ navigation }: Props) {
-    const { username, registerUsername } = useUserStore(state => state)
+    const { username, registerUsername, resetUserDetails } = useUserStore(state => state);
+
+    useEffect(() => {
+        resetUserDetails();
+    }, []);
+
     return (
         <View style={globalStyles.container}>
             <Text style={globalStyles.title}>User Info</Text>
