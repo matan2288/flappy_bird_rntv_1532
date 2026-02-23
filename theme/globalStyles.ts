@@ -1,11 +1,11 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, ViewStyle } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#0f0f23",
+        backgroundColor: "transparent",
         alignItems: "center",
         justifyContent: "center",
         padding: width * 0.05
@@ -45,4 +45,22 @@ export const globalStyles = StyleSheet.create({
         width: "80%",
         maxWidth: width * 0.6,
     },
+    background: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+    },
 });
+
+export const transparentTheme = {
+    dark: false,
+    colors: { background: 'transparent', primary: '', card: '', text: '', border: '', notification: '' },
+    fonts: {
+        regular: { fontFamily: '', fontWeight: 'normal' as const },
+        medium: { fontFamily: '', fontWeight: '500' as const },
+        bold: { fontFamily: '', fontWeight: 'bold' as const },
+        heavy: { fontFamily: '', fontWeight: '900' as const },
+    },
+};
+
+export const transparentContentStyle: ViewStyle = { backgroundColor: 'transparent' };

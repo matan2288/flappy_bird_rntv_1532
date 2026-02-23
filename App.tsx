@@ -1,19 +1,15 @@
+import { ImageBackground } from "react-native";
 import RootNavigator from "./navigation/RootNavigator";
-
-
-// Define the type for our navigation params
-export type RootStackParamList = {
-    Home: undefined;
-    Details: { itemId: number; title: string };
-    Settings: undefined;
-};
-
-
+import { globalStyles } from "@/theme/globalStyles";
 
 export default function App() {
     return (
-        <>
+        <ImageBackground
+            source={require("./assets/flappybirdbg.png")}
+            style={globalStyles.background}
+            resizeMode="stretch"
+        >
             <RootNavigator />
-        </>
+        </ImageBackground>
     );
 }
