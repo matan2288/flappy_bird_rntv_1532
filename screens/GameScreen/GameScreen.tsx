@@ -5,6 +5,7 @@ import { useRef, useEffect, useState, createRef } from "react";
 import { ActionBar } from "./components/ActionBar";
 import { v4 as uuidv4 } from "uuid";
 import type { GameScreenProps, BirdRef, PipesRef } from "./GameScreen.types";
+import { isNumber } from "lodash";
 
 
 export default function GameScreen(props: GameScreenProps) {
@@ -33,10 +34,29 @@ export default function GameScreen(props: GameScreenProps) {
 
             pipeSpwan++;
 
-            setScore(score + 7);
+            let pipeBeforeBird = null;
+
             // Pipes removal logic
             if (pipesListRef.current.length > 0) {
-                const firstPipeX = pipesListRef.current[0].ref.current?.state.pipesXposition;
+                const firstPipeX = pipesListRef.current[0].ref.current?.state?.pipesXposition;
+                if (
+                    isNumber(firstPipeX) &&
+                    firstPipeX > 100 &&
+                    firstPipeX < 180 &&
+                    pipesListRef.current[0].ref.current?.state
+                ) {
+                    pipeBeforeBird = pipesListRef.current[0].ref.current.state;
+                    if (birdRef.current?.isBirdDead(pipeBeforeBird)) {
+                        stopGameLoop();
+                    } else {
+                        setScore(prevScore => prevScore + 7);
+                    }
+                }
+
+                if (birdRef.current?.isBirdDead(pipeBeforeBird) && gameLoop.current) {
+                    stopGameLoop();
+                }
+
                 if (firstPipeX !== undefined && firstPipeX < -80) {
                     pipesListRef.current = pipesListRef.current.slice(1);
                     setPipesList([...pipesListRef.current]);
@@ -56,9 +76,7 @@ export default function GameScreen(props: GameScreenProps) {
                 setDifficulty(4);
             }
 
-            if (birdRef.current?.isBirdDead() && gameLoop.current) {
-                stopGameLoop();
-            }
+
         }, 16);
     };
 
@@ -90,6 +108,10 @@ export default function GameScreen(props: GameScreenProps) {
             {pipesList.map((pipe) => (
                 <Pipes key={pipe.id} ref={pipe.ref} />
             ))}
+            <Text style={{ position: 'absolute', top: 16, left: 16, color: 'yellow', fontWeight: 'bold', fontSize: 18, zIndex: 10 }}>
+
+
+            </Text>
             <ActionBar
                 onRestart={restartGameLoop}
                 onStop={stopGameLoop}
@@ -97,7 +119,7 @@ export default function GameScreen(props: GameScreenProps) {
             />
             <Text style={{ marginBottom: 4, fontWeight: 'bold', color: 'white' }}>Difficulty: {difficulty} score: {score}</Text>
 
-            <Bird ref={birdRef} /> 
+            <Bird ref={birdRef} />
         </View>
     );
 }
