@@ -12,7 +12,7 @@ import { PIPE_WIDTH } from "@/components/game/Pipes/consts";
 import { getDifficultyByScore } from "./utils";
 
 
-export default function GameScreen(props: GameScreenProps) {
+export default function GameScreen({ navigation }: GameScreenProps) {
     // use Refs and other variables to handle values inside the loop without re rendering the component
     const birdRef = useRef<BirdRef>(null);
     const pipesRef = useRef<PipesRef>(null);
@@ -53,6 +53,7 @@ export default function GameScreen(props: GameScreenProps) {
 
                     if (birdRef.current?.isBirdDead(pipeBeforeBird)) {
                         stopGameLoop();
+                        navigation.navigate("YourScore", { score: scoreRef.current, name: "Player" });
                     } else {
                         scoreRef.current += 7;
                         setScore(scoreRef.current);

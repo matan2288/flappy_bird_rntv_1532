@@ -9,10 +9,10 @@ import {
 // Route param types
 export type RootStackParamList = {
     Home: undefined;
-    GameScreen: { itemId: number; title: string };
-    Scoreboard: undefined;
     UserInfo: undefined;
-    YourScore: undefined;
+    GameScreen: undefined;
+    YourScore: { score: number; name: string };
+    Scoreboard: undefined;
 };
 
 // Route configuration
@@ -25,9 +25,7 @@ export const routes = [
     {
         name: "GameScreen" as const,
         component: GameScreen,
-        options: ({ route }: { route: { params: { title: string } } }) => ({
-            title: route.params.title,
-        }),
+        options: { title: "Game" },
     },
     {
         name: "Scoreboard" as const,

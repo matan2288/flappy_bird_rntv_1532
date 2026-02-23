@@ -5,8 +5,7 @@ import { HomeScreenProps } from "./HomeScreen.types";
 export default function HomeScreen({ navigation }: HomeScreenProps) {
     return (
         <View style={globalStyles.container}>
-            <Text style={globalStyles.title}>🏠 Home Screen</Text>
-            <Text style={{ fontSize: 18, color: "#8892b0", marginBottom: 40 }}>Welcome to the navigation demo!</Text>
+            <Text style={globalStyles.title}>Welcome</Text>
 
             <View style={globalStyles.buttonContainer}>
                 <Pressable
@@ -14,9 +13,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
                         globalStyles.button,
                         pressed && globalStyles.buttonPressed,
                     ]}
-                    onPress={() => navigation.navigate("GameScreen", { itemId: 42, title: "Home" })}
+                    onPress={() => navigation.navigate("UserInfo")}
                 >
-                    <Text style={globalStyles.buttonText}>Go to GameScreen</Text>
+                    <Text style={globalStyles.buttonText}>Start</Text>
                 </Pressable>
 
                 <Pressable
@@ -25,9 +24,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
                         globalStyles.buttonSecondary,
                         pressed && globalStyles.buttonPressed,
                     ]}
-                    onPress={() => navigation.navigate("GameScreen", { itemId: 99, title: "Home" })}
+                    onPress={() => navigation.navigate("Scoreboard")}
                 >
-                    <Text style={globalStyles.buttonText}>Go to Details (Burger)</Text>
+                    <Text style={globalStyles.buttonText}>Scoreboard</Text>
                 </Pressable>
             </View>
         </View>

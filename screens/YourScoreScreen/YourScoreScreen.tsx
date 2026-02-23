@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, View, Pressable } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/navigation/routes";
 import { globalStyles } from "@/theme/globalStyles";
@@ -8,7 +8,19 @@ type Props = NativeStackScreenProps<RootStackParamList, "YourScore">;
 export default function YourScoreScreen({ navigation }: Props) {
     return (
         <View style={globalStyles.container}>
-            <Text>🎯 Your Score</Text>
+            <Text style={globalStyles.title}>Your Score</Text>
+
+            <View style={globalStyles.buttonContainer}>
+                <Pressable
+                    style={({ pressed }) => [
+                        globalStyles.button,
+                        pressed && globalStyles.buttonPressed,
+                    ]}
+                    onPress={() => navigation.navigate("Scoreboard")}
+                >
+                    <Text style={globalStyles.buttonText}>Continue</Text>
+                </Pressable>
+            </View>
         </View>
     );
 }
