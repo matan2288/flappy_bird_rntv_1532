@@ -1,6 +1,7 @@
 import { Component, createRef } from 'react';
 import { Image, Dimensions } from "react-native";
 import { PipesStateInterface } from './Pipes.types';
+import { PIPE_HEIGHT_RATIO, RANDOM_OFFSET_MAX, RANDOM_OFFSET_MIN, PIPE_WIDTH, TOP_PIPE_DRAW_START, BOTTOM_PIPE_DRAW_START } from './pipesConsts';
 
 
 class Pipes extends Component<{}, PipesStateInterface> {
@@ -12,11 +13,11 @@ class Pipes extends Component<{}, PipesStateInterface> {
     constructor(props: {}) {
         super(props);
         const { width, height } = Dimensions.get('window');
-        const randomYOffset = (Math.random() * 0.2 - 0.1) * height;
+        const randomYOffset = (Math.random() * RANDOM_OFFSET_MAX - RANDOM_OFFSET_MIN) * height;
 
         this.state = {
-            topPipeEdge: (height * 0.37) + randomYOffset,
-            bottomPipeEdge: (height * 0.37) - randomYOffset,
+            topPipeEdge: (height * PIPE_HEIGHT_RATIO) + randomYOffset,
+            bottomPipeEdge: (height * PIPE_HEIGHT_RATIO) - randomYOffset,
             pipesXposition: width,
             randomYOffset: randomYOffset
         };
@@ -42,7 +43,7 @@ class Pipes extends Component<{}, PipesStateInterface> {
             pipesXposition: 0
         });
     }
-    
+
     render() {
         return (
             <>
@@ -52,9 +53,9 @@ class Pipes extends Component<{}, PipesStateInterface> {
                     style={{
                         position: 'absolute',
                         height: this.getTopPipeEdge(),
-                        width: 80,
+                        width: PIPE_WIDTH,
                         left: this.state.pipesXposition,
-                        top: 0,
+                        top: TOP_PIPE_DRAW_START,
                     }}
                 />
                 <Image
@@ -63,9 +64,9 @@ class Pipes extends Component<{}, PipesStateInterface> {
                     style={{
                         position: 'absolute',
                         height: this.getBottomPipeEdge(),
-                        width: 80,
+                        width: PIPE_WIDTH,
                         left: this.state.pipesXposition,
-                        bottom: 0,
+                        bottom: BOTTOM_PIPE_DRAW_START,
                     }}
                 />
             </>
