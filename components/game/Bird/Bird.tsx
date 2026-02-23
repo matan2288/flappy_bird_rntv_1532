@@ -84,9 +84,9 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
 
     isBirdDead(pipes: any) {
         const { height: screenBottomBorder } = Dimensions.get('window');
-        const horizontallyAligned = this.state.birdPosition.x + BIRD_WIDTH > pipes?.pipesXposition && this.state.birdPosition.x < pipes?.pipesXposition + PIPE_WIDTH;
+        const isHorizontallyAligned = this.state.birdPosition.x + BIRD_WIDTH > pipes?.pipesXposition && this.state.birdPosition.x < pipes?.pipesXposition + PIPE_WIDTH;
 
-        if (horizontallyAligned) {
+        if (isHorizontallyAligned) {
             let topCollision = this.state.birdPosition.y < pipes?.topPipeEdge;
             let bottomCollision = this.state.birdPosition.y + BIRD_HEIGHT > screenBottomBorder - pipes?.bottomPipeEdge;
 

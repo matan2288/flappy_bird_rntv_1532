@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from "uuid";
 import type { GameScreenProps, BirdRef, PipesRef } from "./GameScreen.types";
 import { isEmpty, isNumber } from "lodash";
 import { PIPE_SPAWN_TIMER_LIMIT, PIPE_SPAWN_INITIAL, PIPE_X_MOVEMENT_SPEED, PIPE_OFFSCREEN_REMOVAL } from "./gameScreenConsts";
+import { BIRD_WIDTH, BIRD_INITIAL_X } from "@/components/game/Bird/birdConsts";
+import { PIPE_WIDTH } from "@/components/game/Pipes/pipesConsts";
 
 
 export default function GameScreen(props: GameScreenProps) {
@@ -39,11 +41,9 @@ export default function GameScreen(props: GameScreenProps) {
             // Pipes removal logic
             if (!isEmpty(pipesListRef.current)) {
                 const firstPipeX = pipesListRef.current[0].ref.current?.state?.pipesXposition;
+                const isHorizontallyAligned = isNumber(firstPipeX) && BIRD_INITIAL_X + BIRD_WIDTH > firstPipeX && BIRD_INITIAL_X < firstPipeX + PIPE_WIDTH;
 
-                if (
-                    !isEmpty(pipesListRef.current[0].ref.current?.state)
-                    && isNumber(firstPipeX)
-                ) {
+                if (!isEmpty(pipesListRef.current[0].ref.current?.state) && isHorizontallyAligned) {
                     pipeBeforeBird = pipesListRef.current[0].ref.current.state;
 
                     if (birdRef.current?.isBirdDead(pipeBeforeBird)) {
