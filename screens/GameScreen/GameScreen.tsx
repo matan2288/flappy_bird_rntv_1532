@@ -10,9 +10,12 @@ import { PIPE_SPAWN_TIMER_LIMIT, PIPE_SPAWN_INITIAL, PIPE_X_INITIAL_MOVEMENT_SPE
 import { BIRD_WIDTH, BIRD_INITIAL_X } from "@/components/game/Bird/consts";
 import { PIPE_WIDTH } from "@/components/game/Pipes/consts";
 import { getDifficultyByScore } from "./utils";
+import { useUserStore } from '@/store';
 
 
 export default function GameScreen({ navigation }: GameScreenProps) {
+    const { username, registerScore, registerDifficulty } = useUserStore(state => state)
+
     // use Refs and other variables to handle values inside the loop without re rendering the component
     const birdRef = useRef<BirdRef>(null);
     const pipesRef = useRef<PipesRef>(null);
@@ -25,8 +28,6 @@ export default function GameScreen({ navigation }: GameScreenProps) {
 
     // use useState hooks for re rendering the component when needed
     const [pipesList, setPipesList] = useState<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]); // For re rendering the component for new pipes
-    const [difficulty, setDifficulty] = useState<number>(PIPE_X_INITIAL_MOVEMENT_SPEED);
-    const [score, setScore] = useState<number>(0);
 
 
     const startGameLoop = () => {
@@ -53,10 +54,10 @@ export default function GameScreen({ navigation }: GameScreenProps) {
 
                     if (birdRef.current?.isBirdDead(pipeBeforeBird)) {
                         stopGameLoop();
+                        registerScore(scoreRef.current);
                         navigation.navigate("YourScore", { score: scoreRef.current, name: "Player" });
                     } else {
                         scoreRef.current += 7;
-                        setScore(scoreRef.current);
                     }
                 }
 
@@ -77,7 +78,7 @@ export default function GameScreen({ navigation }: GameScreenProps) {
             const newDifficulty = getDifficultyByScore(scoreRef.current);
             if (newDifficulty !== difficultyRef.current) {
                 difficultyRef.current = newDifficulty;
-                setDifficulty(newDifficulty);
+                registerDifficulty(newDifficulty);
             }
 
         }, 16);
@@ -91,9 +92,9 @@ export default function GameScreen({ navigation }: GameScreenProps) {
         pipesListRef.current = [];
         setPipesList([]);
         scoreRef.current = 0;
-        setScore(0);
+        registerScore(0);
         difficultyRef.current = PIPE_X_INITIAL_MOVEMENT_SPEED;
-        setDifficulty(DifficultySpeed.LEVEL_1);
+        registerDifficulty(DifficultySpeed.LEVEL_1);
         startGameLoop();
     }
 
@@ -122,7 +123,7 @@ export default function GameScreen({ navigation }: GameScreenProps) {
                 onStop={stopGameLoop}
                 onJump={() => birdRef.current?.jump()}
             />
-            <Text style={{ marginBottom: 4, fontWeight: 'bold', color: 'white' }}>Difficulty: {difficulty} score: {score}</Text>
+            <Text style={{ marginBottom: 4, fontWeight: 'bold', color: 'white' }}>Name: {username} Score: {scoreRef.current} Difficulty: {difficultyRef.current}</Text>
             <Bird ref={birdRef} />
         </View>
     );
