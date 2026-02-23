@@ -1,6 +1,6 @@
 // Pipes.tsx constants //
 
-export const PIPE_HEIGHT_RATIO = 0.37;
+export const PIPE_HEIGHT_RATIO = 0.35;
 export const RANDOM_OFFSET_MAX = 0.2;
 export const RANDOM_OFFSET_MIN = 0.1;
 export const PIPE_WIDTH = 80;
