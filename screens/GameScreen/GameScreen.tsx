@@ -5,7 +5,8 @@ import { useRef, useEffect, useState, createRef } from "react";
 import { ActionBar } from "./components/ActionBar";
 import { v4 as uuidv4 } from "uuid";
 import type { GameScreenProps, BirdRef, PipesRef } from "./GameScreen.types";
-import { isNumber } from "lodash";
+import { isEmpty, isNumber } from "lodash";
+import { PIPE_SPAWN_TIMER_LIMIT, PIPE_SPAWN_INITIAL, PIPE_X_MOVEMENT_SPEED, PIPE_OFFSCREEN_REMOVAL } from "./gameScreenConsts";
 
 
 export default function GameScreen(props: GameScreenProps) {
@@ -13,13 +14,13 @@ export default function GameScreen(props: GameScreenProps) {
     const pipesRef = useRef<PipesRef>(null);
     const gameLoop = useRef<NodeJS.Timeout | null>(null);
 
-    const pipesListRef = useRef<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]);
     const [pipesList, setPipesList] = useState<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]);
     const [difficulty, setDifficulty] = useState<number>(3);
     const [score, setScore] = useState<number>(0);
 
-    const pipeSpwanTimerLimit = 120;
-    let pipeSpwan = 0;
+    let pipeBeforeBird = null;
+    let pipeSpwan = PIPE_SPAWN_INITIAL;
+    let pipesListRef = useRef<{ id: string; ref: React.RefObject<PipesRef | null> }[]>([]);
 
     const startGameLoop = () => {
         if (gameLoop.current) return;
@@ -29,23 +30,22 @@ export default function GameScreen(props: GameScreenProps) {
 
             // Pipe movement logic
             pipesListRef.current.forEach(pipe => {
-                pipe.ref.current?.movePipes(3);
+                pipe.ref.current?.movePipes(PIPE_X_MOVEMENT_SPEED);
             });
 
             pipeSpwan++;
 
-            let pipeBeforeBird = null;
 
             // Pipes removal logic
-            if (pipesListRef.current.length > 0) {
+            if (!isEmpty(pipesListRef.current)) {
                 const firstPipeX = pipesListRef.current[0].ref.current?.state?.pipesXposition;
+
                 if (
-                    isNumber(firstPipeX) &&
-                    firstPipeX >= 100 &&
-                    firstPipeX <= 180 &&
-                    pipesListRef.current[0].ref.current?.state
+                    !isEmpty(pipesListRef.current[0].ref.current?.state)
+                    && isNumber(firstPipeX)
                 ) {
                     pipeBeforeBird = pipesListRef.current[0].ref.current.state;
+
                     if (birdRef.current?.isBirdDead(pipeBeforeBird)) {
                         stopGameLoop();
                     } else {
@@ -53,19 +53,19 @@ export default function GameScreen(props: GameScreenProps) {
                     }
                 }
 
-                if (firstPipeX !== undefined && firstPipeX < -80) {
+                if (firstPipeX !== undefined && firstPipeX < PIPE_OFFSCREEN_REMOVAL) {
                     pipesListRef.current = pipesListRef.current.slice(1);
                     setPipesList([...pipesListRef.current]);
                 }
             }
 
             //Pipes spwan logic
-            if (pipeSpwan === pipeSpwanTimerLimit) {
+            if (pipeSpwan === PIPE_SPAWN_TIMER_LIMIT) {
                 const newPipesRef = createRef<PipesRef>();
                 const newPipe = { id: uuidv4(), ref: newPipesRef };
                 pipesListRef.current = [...pipesListRef.current, newPipe];
                 setPipesList([...pipesListRef.current]);
-                pipeSpwan = 0;
+                pipeSpwan = PIPE_SPAWN_INITIAL;
             }
 
             if (score === 50) {
