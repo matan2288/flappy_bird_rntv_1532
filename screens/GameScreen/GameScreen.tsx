@@ -41,8 +41,8 @@ export default function GameScreen(props: GameScreenProps) {
                 const firstPipeX = pipesListRef.current[0].ref.current?.state?.pipesXposition;
                 if (
                     isNumber(firstPipeX) &&
-                    firstPipeX > 100 &&
-                    firstPipeX < 180 &&
+                    firstPipeX >= 100 &&
+                    firstPipeX <= 180 &&
                     pipesListRef.current[0].ref.current?.state
                 ) {
                     pipeBeforeBird = pipesListRef.current[0].ref.current.state;
@@ -51,10 +51,6 @@ export default function GameScreen(props: GameScreenProps) {
                     } else {
                         setScore(prevScore => prevScore + 7);
                     }
-                }
-
-                if (birdRef.current?.isBirdDead(pipeBeforeBird) && gameLoop.current) {
-                    stopGameLoop();
                 }
 
                 if (firstPipeX !== undefined && firstPipeX < -80) {
