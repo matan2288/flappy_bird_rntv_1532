@@ -2,8 +2,6 @@ import { Component, createRef } from 'react';
 import { Image } from 'react-native';
 import { Dimensions } from 'react-native';
 import { BirdPropsInterface, BirdStateInterface } from './Bird.types';
-
-
 class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
     gameLoop: ReturnType<typeof setInterval> | null = null;
     birdRef = createRef<Image>();
@@ -72,15 +70,28 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
         });
     }
 
-    isBirdDead() {
+    isBirdDead(pipes: any) {
         const { height: screenHeight } = Dimensions.get('window');
+        const birdX = this.state.birdPosition.x;
+        const pipeX = pipes?.pipesXposition;
+        const pipeWidth = 80;
+
+        const horizontallyAligned = birdX + 40 > pipeX && birdX < pipeX + pipeWidth;
+
+        if (horizontallyAligned) {
+            let topCollision = this.state.birdPosition.y < pipes?.topPipeEdge;
+            let bottomCollision = this.state.birdPosition.y + 35 > screenHeight - pipes?.bottomPipeEdge;
+
+            if (topCollision || bottomCollision) {
+                this.setState({
+                    isDead: true
+                });
+            }
+        }
+
         if (this.state.birdPosition.y < 0 || this.state.birdPosition.y > screenHeight) {
             this.setState({
                 isDead: true
-            });
-        } else {
-            this.setState({
-                isDead: false
             });
         }
 
@@ -96,8 +107,8 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
                     position: 'absolute',
                     height: this.state.measurements.h,
                     width: this.state.measurements.w,
-                    left: this.state.birdPosition.x,  // Control horizontal position
-                    top: this.state.birdPosition.y,   // Control vertical position
+                    left: this.state.birdPosition.x,
+                    top: this.state.birdPosition.y,
                 }}
             />
         );

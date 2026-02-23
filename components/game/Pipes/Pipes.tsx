@@ -12,10 +12,22 @@ class Pipes extends Component<{}, PipesStateInterface> {
     constructor(props: {}) {
         super(props);
         const { width, height } = Dimensions.get('window');
+        const randomYOffset = (Math.random() * 0.2 - 0.1) * height;
+
         this.state = {
+            topPipeEdge: (height * 0.37) + randomYOffset,
+            bottomPipeEdge: (height * 0.37) - randomYOffset,
             pipesXposition: width,
-            randomYOffset: (Math.random() * 0.2 - 0.1) * height
+            randomYOffset: randomYOffset
         };
+    }
+
+    getTopPipeEdge() {
+        return this.state.topPipeEdge;
+    }
+
+    getBottomPipeEdge() {
+        return this.state.bottomPipeEdge;
     }
 
     movePipes(x: number) {
@@ -30,9 +42,8 @@ class Pipes extends Component<{}, PipesStateInterface> {
             pipesXposition: 0
         });
     }
-
+    
     render() {
-        const { height } = Dimensions.get('window');
         return (
             <>
                 <Image
@@ -40,7 +51,7 @@ class Pipes extends Component<{}, PipesStateInterface> {
                     source={require("@/assets/toppipe.png")}
                     style={{
                         position: 'absolute',
-                        height: (height * 0.37) + this.state.randomYOffset,
+                        height: this.getTopPipeEdge(),
                         width: 80,
                         left: this.state.pipesXposition,
                         top: 0,
@@ -51,7 +62,7 @@ class Pipes extends Component<{}, PipesStateInterface> {
                     source={require("@/assets/bottompipe.png")}
                     style={{
                         position: 'absolute',
-                        height: (height * 0.37) - this.state.randomYOffset,
+                        height: this.getBottomPipeEdge(),
                         width: 80,
                         left: this.state.pipesXposition,
                         bottom: 0,

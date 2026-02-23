@@ -104,17 +104,12 @@ export default function GameScreen(props: GameScreenProps) {
             {pipesList.map((pipe) => (
                 <Pipes key={pipe.id} ref={pipe.ref} />
             ))}
-            <Text style={{ position: 'absolute', top: 16, left: 16, color: 'yellow', fontWeight: 'bold', fontSize: 18, zIndex: 10 }}>
-
-
-            </Text>
             <ActionBar
                 onRestart={restartGameLoop}
                 onStop={stopGameLoop}
                 onJump={() => birdRef.current?.jump()}
             />
             <Text style={{ marginBottom: 4, fontWeight: 'bold', color: 'white' }}>Difficulty: {difficulty} score: {score}</Text>
-
             <Bird ref={birdRef} />
         </View>
     );
