@@ -12,6 +12,8 @@ import {
     BIRD_JUMP_DELAY 
 } from './birdConsts';
 import { PIPE_WIDTH } from '../Pipes/pipesConsts';
+import { SCREEN_TOP_BORDER } from '@/screens/GameScreen/gameScreenConsts';
+
 class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
     gameLoop: ReturnType<typeof setInterval> | null = null;
     birdRef = createRef<Image>();
@@ -81,12 +83,12 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
     }
 
     isBirdDead(pipes: any) {
-        const { height: screenHeight } = Dimensions.get('window');
+        const { height: screenBottomBorder } = Dimensions.get('window');
         const horizontallyAligned = this.state.birdPosition.x + BIRD_WIDTH > pipes?.pipesXposition && this.state.birdPosition.x < pipes?.pipesXposition + PIPE_WIDTH;
 
         if (horizontallyAligned) {
             let topCollision = this.state.birdPosition.y < pipes?.topPipeEdge;
-            let bottomCollision = this.state.birdPosition.y + BIRD_HEIGHT > screenHeight - pipes?.bottomPipeEdge;
+            let bottomCollision = this.state.birdPosition.y + BIRD_HEIGHT > screenBottomBorder - pipes?.bottomPipeEdge;
 
             if (topCollision || bottomCollision) {
                 this.setState({
@@ -95,7 +97,7 @@ class Bird extends Component<BirdPropsInterface, BirdStateInterface> {
             }
         }
 
-        if (this.state.birdPosition.y < 0 || this.state.birdPosition.y > screenHeight) {
+        if (this.state.birdPosition.y < SCREEN_TOP_BORDER || this.state.birdPosition.y > screenBottomBorder) {
             this.setState({
                 isDead: true
             });
