@@ -13,7 +13,7 @@ export default function YourScoreScreen({ navigation }: Props) {
     return (
         <View style={globalStyles.container}>
 
-            <Text style={globalStyles.buttonText}>{username}, Your Score is:</Text>
+            <Text style={globalStyles.buttonText}>{username}Your Score is:</Text>
             <Text style={globalStyles.title}>{score}</Text>
 
             <View style={globalStyles.buttonContainer}>
