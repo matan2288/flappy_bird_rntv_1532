@@ -81,6 +81,8 @@ export default function GameScreen(props: GameScreenProps) {
         stopGameLoop();
         birdRef.current?.resetBirdGravity();
         pipesRef.current?.resetPipes();
+        pipesListRef.current = [];
+        setPipesList([]); 
         startGameLoop();
     }
 
