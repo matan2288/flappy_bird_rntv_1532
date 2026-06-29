@@ -20,7 +20,7 @@ export const routes = [
     {
         name: "Home" as const,
         component: HomeScreen,
-        options: { title: "Navigation Demo" },
+        options: { title: "Home" },
     },
     {
         name: "GameScreen" as const,
