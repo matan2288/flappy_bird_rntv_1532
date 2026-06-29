@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "My App",
-        "slug": "my-app",
+        "name": "React Native Flappy Bird",
+        "slug": "flappy_bird_rntv_1532",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
