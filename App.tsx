@@ -1,3 +1,4 @@
+import "react-native-reanimated";
 import { ImageBackground } from "react-native";
 import RootNavigator from "./navigation/RootNavigator";
 import { globalStyles } from "@/theme/globalStyles";

@@ -8,7 +8,8 @@ import { useUserStore } from '@/store';
 type Props = NativeStackScreenProps<RootStackParamList, "YourScore">;
 
 export default function YourScoreScreen({ navigation }: Props) {
-    const { username, score } = useUserStore(state => state)
+    const username = useUserStore((state) => state.username);
+    const score = useUserStore((state) => state.score);
 
     return (
         <View style={globalStyles.container}>

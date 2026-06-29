@@ -8,7 +8,9 @@ import { useUserStore } from '@/store';
 type Props = NativeStackScreenProps<RootStackParamList, "UserInfo">;
 
 export default function UserInfoScreen({ navigation }: Props) {
-    const { username, registerUsername, resetUserDetails } = useUserStore(state => state);
+    const username = useUserStore((state) => state.username);
+    const registerUsername = useUserStore((state) => state.registerUsername);
+    const resetUserDetails = useUserStore((state) => state.resetUserDetails);
 
     useEffect(() => {
         resetUserDetails();
